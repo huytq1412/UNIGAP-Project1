@@ -57,8 +57,8 @@ awk -F',' '$18 > 7.5' movies_cleaned.csv > highrated_movies.csv
 
 #================================================================
 #3. Tìm ra phim nào có doanh thu cao nhất và doanh thu thấp nhất
-tail -n +2 movies_cleaned.csv | sort -t',' -k5n | head -n 1 | awk -F',' '{print "--- Doanh thu thấp nhất: " $6 " ---"}'
-tail -n +2 movies_cleaned.csv | sort -t',' -k5nr | head -n 1 | awk -F',' '{print "--- Doanh thu cao nhất: " $6 " ---"}'
+tail -n +2 movies_cleaned.csv | sort -t',' -k5,5n | head -n 1 | awk -F',' '{print "--- Doanh thu thấp nhất: " $6 " ---"}'
+tail -n +2 movies_cleaned.csv | sort -t',' -k5,5nr | head -n 1 | awk -F',' '{print "--- Doanh thu cao nhất: " $6 " ---"}'
 
 #================================================================
 #4. Tính tổng doanh thu tất cả các bộ phim
@@ -70,11 +70,11 @@ echo "--- Top 10 bộ phim đem về lợi nhuận cao nhất ---"
 tail -n +2 movies_cleaned.csv | \
 awk -F',' '{
     title = $6
-    budget = $5
-    revenue = $4
-    profit = budget - revenue
+    revenue = $5
+    budget = $4
+    profit = revenue - budget
     print title, profit}' OFS='|'| \
-sort -t'|' -k2nr | \
+sort -t'|' -k2,2nr | \
 head -n 10 | \
 cut -d'|' -f1
 
